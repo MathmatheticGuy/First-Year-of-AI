@@ -3,11 +3,15 @@ import numpy as np;
 # solving linear systems 3 variables
 A = np.array([
     [1, 2, 3],
-    [2, 6, 12],
-    [4, -8, 4]
+    [0, 2, 2],
+    [1, 4, 5]
 ], dtype=np.dtype(float))
 
 b = np.array([10, 4, 8], dtype=np.dtype(float))
+
+# calculate the value of A matrix
+d = np.linalg.det(A)
+print(f"Determinant of matrix A: {d:.2f}")
 
 print("Matrix A:")
 print(A)
@@ -28,9 +32,7 @@ x = np.linalg.solve(A, b)
 
 print(f"Solution: {x}")  # print out solution of x,y,z
 
-# calculate the value of A matrix
-d = np.linalg.det(A)
-print(f"Determinant of matrix A: {d:.2f}")
+
 
 # np.hstack() -> Unified Matrix A with B
 # reshape
