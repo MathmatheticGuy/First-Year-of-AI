@@ -1,5 +1,4 @@
 import numpy as np
-import unittest
 
 
 def swap_rows(M, row_index_1, row_index_2):
@@ -12,11 +11,12 @@ def swap_rows(M, row_index_1, row_index_2):
     - row_index_2 (int): Index of the second row to be swapped.
     """
 
-    # Copy matrix A so the changes do not affect the original matrix.
+    # Copy matrix M so the changes do not affect the original matrix.
     M = M.copy()
     # Swap indexes
     M[[row_index_1, row_index_2]] = M[[row_index_2, row_index_1]]
     return M
+
 
 def get_index_first_non_zero_value_from_column(M, column, starting_row):
     """
@@ -28,87 +28,55 @@ def get_index_first_non_zero_value_from_column(M, column, starting_row):
     - starting_row (int): The starting row index for the search.
 
     Returns:
-    int or None: The index of the first non-zero value in the specified column, starting from the given row.
-                Returns None if no non-zero value is found.
+    int or False: The index of the first non-zero value in the specified column, starting from the given row.
+                Returns False if no non-zero value is found.
     """
     # Get the column array starting from the specified row
     column_array = M[starting_row:,column]
-    print('column array: ', column_array)
+    print(f'print out column array starting from row {starting_row:} and column {column}: ', column_array)
     for i, val in enumerate(column_array):
-        # Iterate over every value in the column array.
+        # Iterate over every value in the column array. 
         # To check for non-zero values, you must always use np.isclose instead of doing "val == 0".
         if not np.isclose(val, 0, atol = 1e-5):
             # If one non zero value is found, then adjust the index to match the correct index in the matrix and return it.
             index = i + starting_row
             return index
     # If no non-zero value is found below it, return None.
-    return None
+    return False
 
-# If a row is full of 0. Move row to the bottom
-def move_row_to_bottom(M, row_index):
-    """
-        Move the specified row to the bottom of the given matrix.
+N = np.array([
+[0, 5, -3 ,6 ,8],
+[0, 6, 3, 8, 1],
+[0, 0, 0, 0, 0],
+[0, 0, 0 ,0 ,7],
+[0, 2, 1, 0, 4]
+]
+)
+print(N)
+# print out column array starting from row 2 and column 1
+print(get_index_first_non_zero_value_from_column(N, column = 2, starting_row = 2))
 
-        Parameters:
-        - A (numpy.array): Input matrix.
-        - row_index (int): Index of the row to be moved to the bottom.
 
-        Returns:
-            numpy.array: Matrix with the specified row moved to the bottom.
-    """
-
-    # Make a copy of A to avoid modifying the original matrix
-    M = M.copy()
-
-    # Extract the specified row
-    row_to_move = M[row_index]
-
-    # Delete the specified row from the matrix
-    M = np.delete(M, row_index, axis=0)
-
-    # Append the row at the bottom of the matrix
-    M = np.vstack([M, row_to_move])
-
+def row_echelon_form(A, B):
+    det_A = np.linalg.det(A)
+    if np.isclose(det_A, 0) == True:
+        return 'Singular system'
+    A = A.copy()
+    B = B.copy()
+    A = A.astype('float64')
+    B = B.astype('float64')
+    num_rows = len(A)
+    M = augmented_matrix(A, B)
+    for row in range(num_rows):
+        pivot_candidate = M[num_rows, None]
+        if np.isclose(pivot_candidate, 0) == True:
+            first_non_zero_value_below_pivot_candidate = get_index_first_non_zero_value_from_column(M, row, row)
+            M = swap_rows(M, row, first_non_zero_value_below_pivot_candidate)
+            pivot = M[row, row]
+        else:
+            pivot = pivot_candidate
+        M[row] = 1 / pivot * M[row]
+        for j in range(row + 1, num_rows):
+            value_below_pivot = M[j, row]
+            M[j] = M[j] - value_below_pivot * M[row]
     return M
-
-# Concatinate 2 Matrixes (Like concat 3x3 matrix with 1x1 matrix to get 4x4 matrix)
-def augmented_matrix(A, B):
-    """
-    Create an augmented matrix by horizontally stacking two matrices A and B.
-
-    Parameters:
-    - A (numpy.array): First matrix.
-    - B (numpy.array): Second matrix.
-
-    Returns:
-    - numpy.array: Augmented matrix obtained by horizontally stacking A and B.
-    """
-    augmented_M = np.hstack((A,B))
-    return augmented_M
-
-def multiply_matrix(matrix, row_num, row_num_multiple):
-    # .copy() function is required here to keep the original matrix without any changes
-    mul_matrix = matrix.copy()
-    mul_matrix[row_num] = mul_matrix[row_num] * row_num_multiple
-    return mul_matrix
-
-def AddRow(M, row1, row2, row_multiplier):
-    newM = M.copy()
-    newM[row1] = newM[row1] + row_multiplier * newM[row2]
-    return newM
-
-# Indexing starts at 0
-A = np.array([[1,2,3],[0,0,0], [0,0,5]])
-B = np.array([[1], [2], [4]])
-
-M = np.hstack((A, B.reshape(3, 1)))
-print(M)
-# x = np.linalg.solve(M)
-
-for i in M:
-    for k in range(len(M)):
-        print(k)
-    print(i)
-
-
-
