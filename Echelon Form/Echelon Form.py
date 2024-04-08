@@ -57,26 +57,26 @@ print(N)
 print(get_index_first_non_zero_value_from_column(N, column = 2, starting_row = 2))
 
 
-def row_echelon_form(A, B):
-    det_A = np.linalg.det(A)
-    if np.isclose(det_A, 0) == True:
-        return 'Singular system'
-    A = A.copy()
-    B = B.copy()
-    A = A.astype('float64')
-    B = B.astype('float64')
-    num_rows = len(A)
-    M = augmented_matrix(A, B)
-    for row in range(num_rows):
-        pivot_candidate = M[num_rows, None]
-        if np.isclose(pivot_candidate, 0) == True:
-            first_non_zero_value_below_pivot_candidate = get_index_first_non_zero_value_from_column(M, row, row)
-            M = swap_rows(M, row, first_non_zero_value_below_pivot_candidate)
-            pivot = M[row, row]
-        else:
-            pivot = pivot_candidate
-        M[row] = 1 / pivot * M[row]
-        for j in range(row + 1, num_rows):
-            value_below_pivot = M[j, row]
-            M[j] = M[j] - value_below_pivot * M[row]
-    return M
+# def row_echelon_form(A, B):
+#     det_A = np.linalg.det(A)
+#     if np.isclose(det_A, 0) == True:
+#         return 'Singular system'
+#     A = A.copy()
+#     B = B.copy()
+#     A = A.astype('float64')
+#     B = B.astype('float64')
+#     num_rows = len(A)
+#     M = augmented_matrix(A, B)
+#     for row in range(num_rows):
+#         pivot_candidate = M[num_rows, None]
+#         if np.isclose(pivot_candidate, 0) == True:
+#             first_non_zero_value_below_pivot_candidate = get_index_first_non_zero_value_from_column(M, row, row)
+#             M = swap_rows(M, row, first_non_zero_value_below_pivot_candidate)
+#             pivot = M[row, row]
+#         else:
+#             pivot = pivot_candidate
+#         M[row] = 1 / pivot * M[row]
+#         for j in range(row + 1, num_rows):
+#             value_below_pivot = M[j, row]
+#             M[j] = M[j] - value_below_pivot * M[row]
+#     return M
