@@ -1,5 +1,6 @@
 import numpy as np;
 
+
 # solving linear systems 3 variables
 A = np.array([
     [1, 2, 3],

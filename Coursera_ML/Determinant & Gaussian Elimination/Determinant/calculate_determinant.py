@@ -1,5 +1,4 @@
 import numpy as np
-from utils import plot_lines
 
 A_2 = np.array([
         [-3, 8, 1],
