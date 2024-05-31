@@ -15,3 +15,6 @@ def fizzbuzz(num):
         print(output or nigga)  
 
 fizzbuzz(1000) 
+
+
+
