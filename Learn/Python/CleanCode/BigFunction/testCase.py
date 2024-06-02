@@ -1,4 +1,4 @@
-from BigFunction import enter_club
+from module import enter_club
 
 # Test case 1: Valid name, age, and ID
 enter_club("John", 20, True)  # Expected output: "Welcome to the club"
