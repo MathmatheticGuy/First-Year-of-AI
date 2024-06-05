@@ -2,7 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Project/animeDataSet" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/others git project/David/devika" vcs="Git" />
   </component>
 </project>
