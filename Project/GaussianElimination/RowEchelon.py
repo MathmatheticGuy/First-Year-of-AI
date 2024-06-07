@@ -65,7 +65,7 @@ def get_index_first_non_zero_value_from_row(M, row_index, augmented):
 def main():
     # Step 0: Making the matrix
     # Make sure data type is float for accurate calculation
-    A = np.array([[0, 2, 3], [1, 1, 0], [2, 0, 5]], dtype=np.dtype(float))
+    A = np.array([[1, 2, 3], [0, 1, 0], [2, 0, 5]], dtype=np.dtype(float))
     B = np.array([1, 2, 4])
     M = augmented_matrix(A, B)
     augmented = True;
@@ -81,6 +81,7 @@ def main():
     print(swapped_matrix)
 
     get_index_first_non_zero_value_from_row(swapped_matrix, 0, augmented)
+    
     #! Goal: Make all values below the pivot zeros
     #TODO 3s: For subtract each row with the 1/value below the pivot
     #TODO 3e: Write testcase for column 0 to 3
